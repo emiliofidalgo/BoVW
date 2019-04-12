@@ -56,5 +56,15 @@ link_directories(${OpenCV_LIBRARIES}
 add_library(BoVW
             src/bow_trainer.cc)
 target_link_libraries(BoVW
-                      ${OpenCV_LIBRARIES}
-                      ${Boost_LIBRARIES})
+            ${OpenCV_LIBRARIES}
+            ${Boost_LIBRARIES})
+
+# Main file
+add_executable(test_bow
+            src/main.cc)
+
+target_link_libraries(test_bow
+            BoVW
+            ${catkin_LIBRARIES}
+            ${OpenCV_LIBRARIES}
+            ${Boost_LIBRARIES})

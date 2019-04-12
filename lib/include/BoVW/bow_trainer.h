@@ -27,6 +27,11 @@
 
 #include <opencv2/opencv.hpp>
 
+#include <cassert>
+#include <cmath>
+#include <unordered_map>
+#include <unordered_set>
+
 namespace bovw {
 
 class BoVWTrainer {
@@ -37,9 +42,31 @@ class BoVWTrainer {
   // Destructor
   virtual ~BoVWTrainer();
 
+  // Methods
+  void add(const unsigned img_id, const cv::Mat& descriptors);
+  void clear();
+  unsigned numImages();
+  unsigned numDescriptors();
+  void train(cv::Mat& vwords,
+             cv::Mat& idf,
+             const int cluster_count,
+             const cv::TermCriteria& termcrit = cv::TermCriteria(),
+             const int attempts = 3,
+             const int flags=cv::KMEANS_PP_CENTERS);
+
  private:
-  std::vector<cv::Mat> descriptors_;
-  unsigned total_size_;
+  std::unordered_map<unsigned, cv::Mat> descriptors_;
+  unsigned nimages_;
+  unsigned ndescriptors_;
+
+  // Methods
+  void clusterKMeans(const cv::Mat& descriptors, 
+                     cv::Mat& clusters,
+                     cv::Mat& labels,
+                     const int cluster_count,
+                     const cv::TermCriteria& termcrit,
+                     const int attempts,
+                     const int flags);
 };
 
 }  // namespace bovw
