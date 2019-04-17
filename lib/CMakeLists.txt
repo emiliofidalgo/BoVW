@@ -54,7 +54,8 @@ link_directories(${OpenCV_LIBRARIES}
 
 ### Targets ###
 add_library(BoVW
-            src/bow_trainer.cc)
+            src/bow_trainer.cc
+            src/bow_img_desc.cc)
 target_link_libraries(BoVW
             ${OpenCV_LIBRARIES}
             ${Boost_LIBRARIES})
